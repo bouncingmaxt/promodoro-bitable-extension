@@ -4,6 +4,7 @@ import React from 'react';
 import { Card, Button, Typography, Space, Tag } from '@douyinfe/semi-ui';
 import { Task } from '../types';
 import { useExecutionContext, useStorageContext } from '../contexts';
+import { formatMinutes } from '../utils';
 
 interface TaskCardProps {
   task: Task;
@@ -46,7 +47,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onStart }) => {
 
           <div>
             <Text type="secondary">
-              时间: {completedTime}分钟/{totalTime}分钟
+              时间: {formatMinutes(completedTime)}/{formatMinutes(totalTime)}
             </Text>
           </div>
         </div>

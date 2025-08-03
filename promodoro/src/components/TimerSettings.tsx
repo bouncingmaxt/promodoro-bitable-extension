@@ -6,7 +6,7 @@ import { useStorageContext } from '../contexts';
 
 interface TimerSettingsProps {}
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 export const TimerSettings: React.FC<TimerSettingsProps> = ({}) => {
   const { userSettings, updateUserSettings } = useStorageContext();
