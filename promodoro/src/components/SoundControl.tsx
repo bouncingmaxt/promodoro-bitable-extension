@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@douyinfe/semi-ui';
 import { IconVolume2, IconVolume1 } from '@douyinfe/semi-icons';
+import soundFile from '../assets/electronic-doorbell-262895.mp3';
 
 interface SoundControlProps {
   onSoundToggle?: (enabled: boolean) => void;
@@ -39,7 +40,7 @@ export const SoundControl = React.forwardRef<SoundControlRef, SoundControlProps>
     <>
       <audio
         ref={audioRef}
-        src="/electronic-doorbell-262895.mp3"
+        src={soundFile}
         preload="auto"
         style={{ display: 'none' }}
       />

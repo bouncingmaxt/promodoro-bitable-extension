@@ -69,6 +69,13 @@ const config = {
               filename: 'assets/[name][ext][query]',
             },
           },
+          {
+            test: /\.(mp3|wav|ogg|m4a)$/,
+            type: 'asset/resource',
+            generator: {
+              filename: 'assets/[name][ext][query]',
+            },
+          },
         ],
       },
     ],
