@@ -40,13 +40,9 @@ export const TimerSettings: React.FC<TimerSettingsProps> = ({}) => {
 
   return (
     <Card style={{ marginBottom: 24 }} bodyStyle={{ padding: 16 }}>
-      <Title heading={6} style={{ margin: '0 0 16px 0' }}>
-        倒计时设置
-      </Title>
-
       <Space align="center" style={{ width: '100%', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <Text>时长:</Text>
+          <Text>单次专注时长:</Text>
           <InputNumber
             value={duration}
             onChange={(value) => setDuration(value as number)}
