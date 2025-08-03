@@ -43,14 +43,14 @@ export const TaskSelector: React.FC<TaskSelectorProps> = ({
       </Title>
 
       {/* 统计信息 */}
-      <Statistics />
+      <Title heading={6} style={{ margin: '0 0 12px 0', textAlign: 'center' }}>任务统计</Title>
+      <div>
+        <Statistics />
+      </div>
 
       {/* 任务列表 */}
+      <Title heading={6} style={{ margin: '0 0 16px 0', textAlign: 'center' }}>进行中的任务</Title>
       <div>
-        <Title heading={6} style={{ margin: '0 0 16px 0' }}>
-          进行中的任务
-        </Title>
-
         {tasks.length === 0 ? (
           <Empty
             title="暂无任务"
@@ -70,12 +70,11 @@ export const TaskSelector: React.FC<TaskSelectorProps> = ({
         )}
       </div>
 
-      <Title heading={6} style={{ margin: '0 0 16px 0' }}>
-        设置
-      </Title>
-
       {/* 倒计时设置 */}
-      <TimerSettings />
+      <Title heading={6} style={{ margin: '0 0 16px 0', textAlign: 'center' }}>设置</Title>
+      <div>
+        <TimerSettings />
+      </div>
     </div>
   );
 };

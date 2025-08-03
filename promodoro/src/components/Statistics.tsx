@@ -46,9 +46,7 @@ export const Statistics: React.FC<StatsProps> = ({}) => {
   const stats = calculateStats();
 
   return (
-    <div style={{ padding: 16 }}>
-      <Card style={{ margin: '16px 0' }}>
-        <Typography.Title heading={6} style={{ margin: '0 0 12px 0', textAlign: 'center' }}>任务统计</Typography.Title>
+    <Card style={{ margin: '16px 0' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {/* 第一行：完成次数和完成率 */}
           <Space style={{ justifyContent: 'space-around', width: '100%' }}>
@@ -83,6 +81,5 @@ export const Statistics: React.FC<StatsProps> = ({}) => {
           </Space>
         </div>
       </Card>
-    </div>
   );
 };
