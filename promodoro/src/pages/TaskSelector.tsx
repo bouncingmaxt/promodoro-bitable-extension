@@ -1,11 +1,11 @@
 // 任务选择器组件
 
 import React from 'react';
-import { Spin, Typography, Empty, Card, Space } from '@douyinfe/semi-ui';
+import { Spin, Typography, Empty } from '@douyinfe/semi-ui';
 import { Task } from '../types';
 import { TaskCard } from '../components/TaskCard';
 import { TimerSettings } from '../components/TimerSettings';
-import { useTaskContext, useStorageContext, useExecutionContext } from '../contexts';
+import { useTaskContext, useStorageContext } from '../contexts';
 import { Statistics } from '../components/Statistics';
 
 interface TaskSelectorProps {
