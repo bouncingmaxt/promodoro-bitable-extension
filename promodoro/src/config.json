@@ -1,0 +1,10 @@
+{
+    "TaskTable": {
+        "Name": "任务",
+        "View": "进行中"
+    },
+    "ExecutionTable": {
+        "Name": "执行记录",
+        "View": "今天执行"
+    }
+}

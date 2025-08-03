@@ -1,17 +1,65 @@
-import React from 'react';
-import { useAsync } from 'react-async-hook';
-import { Table } from '@douyinfe/semi-ui';
-import { getTableData } from './utils';
+import { useState } from 'react';
+import { Task } from './types';
+import { TaskSelector, TimerClock } from './pages';
+import ErrorPage from './components/ErrorPage';
+import { TaskProvider, ExecutionProvider, ErrorProvider, StorageProvider, useErrorContext } from './contexts';
 
-export const App = () => {
-  // 获取 bitable 数据
-  const response = useAsync(getTableData, []);
+type AppMode = 'task-selector' | 'timer' | 'error';
 
-  if (!response.result) return <></>;
+// 应用内容组件（在 ErrorProvider 内部）
+const AppContent = () => {
+  const [mode, setMode] = useState<AppMode>('task-selector');
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const { hasError } = useErrorContext();
 
-  const {
-    result: { columns, dataSource },
-  } = response;
+  // 开始任务
+  const handleTaskStart = (task: Task) => {
+    setSelectedTask(task);
+    setMode('timer');
+  };
 
-  return <Table columns={columns} dataSource={dataSource} />;
+  // 返回任务选择页面
+  const handleBackToTaskSelector = () => {
+    setSelectedTask(null);
+    setMode('task-selector');
+  };
+
+  // 如果有错误，显示错误页面
+  if (hasError) {
+    return (
+      <ErrorPage onReturnToTasks={handleBackToTaskSelector} />
+    );
+  }
+
+  // 正常的应用内容
+  return (
+    <StorageProvider>
+      <TaskProvider>
+        <ExecutionProvider>
+          {
+            mode === 'timer' && selectedTask ?
+              <TimerClock
+                task={selectedTask}
+                onBack={handleBackToTaskSelector}
+              />
+              :
+              <TaskSelector
+                onTaskStart={handleTaskStart}
+              />
+          }
+        </ExecutionProvider>
+      </TaskProvider>
+    </StorageProvider>
+  );
 };
+
+// 主应用组件
+const App = () => {
+  return (
+    <ErrorProvider>
+      <AppContent />
+    </ErrorProvider>
+  );
+};
+
+export default App;
