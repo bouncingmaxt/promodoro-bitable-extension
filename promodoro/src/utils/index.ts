@@ -2,4 +2,3 @@
 
 export * from './dataService';
 export * from './timeUtils';
-export * from './soundUtils';

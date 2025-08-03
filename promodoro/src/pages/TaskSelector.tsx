@@ -70,7 +70,7 @@ export const TaskSelector: React.FC<TaskSelectorProps> = ({
         )}
       </div>
 
-      {/* 倒计时设置 */}
+      {/* 设置 */}
       <Title heading={6} style={{ margin: '0 0 16px 0', textAlign: 'center' }}>设置</Title>
       <div>
         <TimerSettings />
