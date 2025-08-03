@@ -35,9 +35,13 @@ export async function getTasksFromView(): Promise<Task[]> {
       const task: Task = {
         id: rid,
         title: fields[fieldMap.get('任务')] as IOpenSegment[] || [],
-        taskType: fields[fieldMap.get('任务类型')] as IOpenSingleSelect || '',
+        taskType: Array.isArray(fields[fieldMap.get('任务类型')]) 
+          ? (fields[fieldMap.get('任务类型')] as IOpenSingleSelect[])[0] || ''
+          : fields[fieldMap.get('任务类型')] as IOpenSingleSelect || '',
         count: fields[fieldMap.get('次数')] as number || 0,
-        quadrant: fields[fieldMap.get('任务象限')] as IOpenSingleSelect || ''
+        quadrant: Array.isArray(fields[fieldMap.get('任务象限')]) 
+          ? (fields[fieldMap.get('任务象限')] as IOpenSingleSelect[])[0] || ''
+          : fields[fieldMap.get('任务象限')] as IOpenSingleSelect || ''
       };
       tasks.push(task);
     }
@@ -55,6 +59,7 @@ export async function getTasksFromView(): Promise<Task[]> {
 
       return priorityA - priorityB;
     });
+    console.log("获取任务数据", tasks);
     return tasks;
   } catch (error) {
     console.error('获取任务数据失败:', error);
