@@ -1,12 +1,11 @@
 // 倒计时时钟组件
 
-import React, { useEffect, useState, useReducer, useRef } from 'react';
+import React, { useEffect, useState, useReducer, useContext } from 'react';
 import { Typography, Progress, Card } from '@douyinfe/semi-ui';
 import { Task } from '../types';
-import { useErrorContext, useExecutionContext, useStorageContext } from '../contexts';
+import { useErrorContext, useExecutionContext, useStorageContext, AudioDispatchContext } from '../contexts';
 import { TimerControls } from '../components/TimerControls';
 import { showConfirm } from '../components/modalUtils';
-import { SoundControlRef } from '../components/SoundControl';
 
 const { Title, Text } = Typography;
 
@@ -33,10 +32,10 @@ export const TimerClock: React.FC<TimerClockProps> = ({ task, onBack }) => {
   const { userSettings, getTaskStorage, updateTaskStorage } = useStorageContext();
   const { addExecutionRecord } = useExecutionContext();
   const { setError } = useErrorContext();
+  const audioDispatch = useContext(AudioDispatchContext);
 
   const [running, setRunning] = useState(false);
   const [runTime, dispatchRunTime] = useReducer(runTimeReducer, (getTaskStorage(task)?.accumulatedTime || 0) * 60);
-  const soundControlRef = useRef<SoundControlRef>(null);
 
   // 暴露的接口：runtime+1
   const incrementRunTime = () => {
@@ -60,8 +59,8 @@ export const TimerClock: React.FC<TimerClockProps> = ({ task, onBack }) => {
   }, [runTime]);
 
   const handleComplete = async (timeMinutes: number) => {
-    // 使用声音控制组件播放声音
-    soundControlRef.current?.playSound();
+    // 播放完成声音
+    audioDispatch?.playSoundIfEnabled();
 
     try {
       await addExecutionRecord(task, timeMinutes);
@@ -138,7 +137,6 @@ export const TimerClock: React.FC<TimerClockProps> = ({ task, onBack }) => {
           setRunning={setRunning}
           incrementRunTime={incrementRunTime}
           onBack={onBack}
-          soundControlRef={soundControlRef}
         />
       </Card>
     </div>

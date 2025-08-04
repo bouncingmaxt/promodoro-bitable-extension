@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Task } from './types';
 import { TaskSelector, TimerClock } from './pages';
 import ErrorPage from './components/ErrorPage';
-import { TaskProvider, ExecutionProvider, ErrorProvider, StorageProvider, useErrorContext } from './contexts';
+import { TaskProvider, ExecutionProvider, ErrorProvider, StorageProvider, useErrorContext, AudioProvider } from './contexts';
 
 type AppMode = 'task-selector' | 'timer' | 'error';
 
@@ -33,23 +33,25 @@ const AppContent = () => {
 
   // 正常的应用内容
   return (
-    <StorageProvider>
-      <TaskProvider>
-        <ExecutionProvider>
-          {
-            mode === 'timer' && selectedTask ?
-              <TimerClock
-                task={selectedTask}
-                onBack={handleBackToTaskSelector}
-              />
-              :
-              <TaskSelector
-                onTaskStart={handleTaskStart}
-              />
-          }
-        </ExecutionProvider>
-      </TaskProvider>
-    </StorageProvider>
+    <AudioProvider>
+      <StorageProvider>
+        <TaskProvider>
+          <ExecutionProvider>
+            {
+              mode === 'timer' && selectedTask ?
+                <TimerClock
+                  task={selectedTask}
+                  onBack={handleBackToTaskSelector}
+                />
+                :
+                <TaskSelector
+                  onTaskStart={handleTaskStart}
+                />
+            }
+          </ExecutionProvider>
+        </TaskProvider>
+      </StorageProvider>
+    </AudioProvider>
   );
 };
 

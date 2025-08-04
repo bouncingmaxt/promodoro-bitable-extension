@@ -5,7 +5,7 @@ import { Button, Space } from '@douyinfe/semi-ui';
 import { IconPlay, IconPause, IconStop } from '@douyinfe/semi-icons';
 import { useStorageContext } from '../contexts';
 import { showConfirm } from '../components/modalUtils';
-import { SoundControl, SoundControlRef } from './SoundControl';
+import { SoundControl } from './SoundControl';
 
 interface TimerControlsProps {
   runTime: number;
@@ -13,10 +13,9 @@ interface TimerControlsProps {
   setRunning: (running: boolean) => void;
   incrementRunTime: () => void;
   onBack: () => void;
-  soundControlRef?: React.RefObject<SoundControlRef>;
 }
 
-export const TimerControls: React.FC<TimerControlsProps> = ({ runTime, running, setRunning, incrementRunTime, onBack, soundControlRef }) => {
+export const TimerControls: React.FC<TimerControlsProps> = ({ runTime, running, setRunning, incrementRunTime, onBack }) => {
   const { userSettings } = useStorageContext();
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -102,7 +101,7 @@ export const TimerControls: React.FC<TimerControlsProps> = ({ runTime, running, 
         </Button>
       )}
 
-      <SoundControl ref={soundControlRef} />
+      <SoundControl />
 
       <Button
         type="tertiary"
