@@ -10,6 +10,6 @@
     "Sound": {
         "duration": 800,
         "frequency": 440,
-        "volume": 0.15
+        "volume": 1.0
     }
 }
