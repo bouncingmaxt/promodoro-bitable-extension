@@ -6,5 +6,10 @@
     "ExecutionTable": {
         "Name": "执行记录",
         "View": "今天执行"
+    },
+    "Sound": {
+        "duration": 800,
+        "frequency": 440,
+        "volume": 0.15
     }
 }

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@douyinfe/semi-ui';
 import { IconVolume2, IconVolume1 } from '@douyinfe/semi-icons';
+import config from '../config.json';
 
 interface SoundControlProps {
   onSoundToggle?: (enabled: boolean) => void;
@@ -10,9 +11,11 @@ interface SoundControlProps {
 
 export const SoundControl = React.forwardRef<SoundControlRef, SoundControlProps>(({ onSoundToggle }, ref) => {
   const [soundState, setSoundState] = useState({ prev: true, current: true });
+  const hiddenSoundButtonRef = useRef<HTMLButtonElement>(null);
 
   // 使用Web Audio API播放蜂鸣音
-  const playBeep = (duration = 800, frequency = 440, volume = 0.3) => {
+  const playBeep = () => {
+    const { duration, frequency, volume } = config.Sound;
     try {
       const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
       const oscillator = audioContext.createOscillator();
@@ -39,7 +42,8 @@ export const SoundControl = React.forwardRef<SoundControlRef, SoundControlProps>
   useEffect(() => {
     // 只有当状态从false变为true时才播放声音（激活时）
     if (soundState.prev === false && soundState.current === true) {
-      playBeep();
+      // 通过触发隐藏按钮点击来播放声音（iOS兼容性）
+      hiddenSoundButtonRef.current?.click();
     }
   }, [soundState]);
 
@@ -52,7 +56,8 @@ export const SoundControl = React.forwardRef<SoundControlRef, SoundControlProps>
   // 暴露播放声音的方法
   const playSound = () => {
     if (soundState.current) {
-      playBeep();
+      // 通过触发隐藏按钮点击来播放声音（iOS兼容性）
+      hiddenSoundButtonRef.current?.click();
     }
   };
 
@@ -62,15 +67,25 @@ export const SoundControl = React.forwardRef<SoundControlRef, SoundControlProps>
   }));
 
   return (
-    <Button
-      type="tertiary"
-      size="large"
-      icon={soundState.current ? <IconVolume2 /> : <IconVolume1 />}
-      onClick={toggleSound}
-      style={{ color: soundState.current ? '#1890ff' : '#999' }}
-    >
-      {soundState.current ? '声音' : '静音'}
-    </Button>
+    <>
+      {/* 隐藏的声音触发按钮，用于iOS兼容性 */}
+      <button
+        ref={hiddenSoundButtonRef}
+        onClick={playBeep}
+        style={{ display: 'none' }}
+        aria-hidden="true"
+      />
+
+      <Button
+        type="tertiary"
+        size="large"
+        icon={soundState.current ? <IconVolume2 /> : <IconVolume1 />}
+        onClick={toggleSound}
+        style={{ color: soundState.current ? '#1890ff' : '#999' }}
+      >
+        {soundState.current ? '声音' : '静音'}
+      </Button>
+    </>
   );
 });
 
